@@ -1,0 +1,105 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\henri\\OneDrive\\Desktop\\OrderService\\OrderService\\OrderService\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2BD15532-2143-4E84-B3A7-C9E10997263C}|OrderService.Tests\\OrderService.Tests.csproj|c:\\users\\henri\\onedrive\\desktop\\orderservice\\orderservice\\orderservice\\orderservice.tests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2BD15532-2143-4E84-B3A7-C9E10997263C}|OrderService.Tests\\OrderService.Tests.csproj|solutionrelative:orderservice.tests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F747D5DB-5DCF-4AB6-B519-F0D6F518576C}|OrderService.Domain\\OrderService.Domain.csproj|c:\\users\\henri\\onedrive\\desktop\\orderservice\\orderservice\\orderservice\\orderservice.domain\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F747D5DB-5DCF-4AB6-B519-F0D6F518576C}|OrderService.Domain\\OrderService.Domain.csproj|solutionrelative:orderservice.domain\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E05C380-F3E7-4B98-93CF-CECA36DD78A0}|OrderService.Infrastructure\\OrderService.Infrastructure.csproj|c:\\users\\henri\\onedrive\\desktop\\orderservice\\orderservice\\orderservice\\orderservice.infrastructure\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E05C380-F3E7-4B98-93CF-CECA36DD78A0}|OrderService.Infrastructure\\OrderService.Infrastructure.csproj|solutionrelative:orderservice.infrastructure\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{46B8D01B-D569-4C4F-89FF-3CE75B63BCC0}|OrderService.Application\\OrderService.Application.csproj|c:\\users\\henri\\onedrive\\desktop\\orderservice\\orderservice\\orderservice\\orderservice.application\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{46B8D01B-D569-4C4F-89FF-3CE75B63BCC0}|OrderService.Application\\OrderService.Application.csproj|solutionrelative:orderservice.application\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FA4DF23A-62BF-418E-8A18-F4756F366A76}|OrderService\\OrderService.csproj|c:\\users\\henri\\onedrive\\desktop\\orderservice\\orderservice\\orderservice\\orderservice\\orderservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{FA4DF23A-62BF-418E-8A18-F4756F366A76}|OrderService\\OrderService.csproj|solutionrelative:orderservice\\orderservice.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UnitTest1.cs",
+              "DocumentMoniker": "C:\\Users\\henri\\OneDrive\\Desktop\\OrderService\\OrderService\\OrderService\\OrderService.Tests\\UnitTest1.cs",
+              "RelativeDocumentMoniker": "OrderService.Tests\\UnitTest1.cs",
+              "ToolTip": "C:\\Users\\henri\\OneDrive\\Desktop\\OrderService\\OrderService\\OrderService\\OrderService.Tests\\UnitTest1.cs",
+              "RelativeToolTip": "OrderService.Tests\\UnitTest1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-22T23:02:18.683Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\henri\\OneDrive\\Desktop\\OrderService\\OrderService\\OrderService\\OrderService.Infrastructure\\Class1.cs",
+              "RelativeDocumentMoniker": "OrderService.Infrastructure\\Class1.cs",
+              "ToolTip": "C:\\Users\\henri\\OneDrive\\Desktop\\OrderService\\OrderService\\OrderService\\OrderService.Infrastructure\\Class1.cs",
+              "RelativeToolTip": "OrderService.Infrastructure\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-22T22:59:15.009Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\henri\\OneDrive\\Desktop\\OrderService\\OrderService\\OrderService\\OrderService.Domain\\Class1.cs",
+              "RelativeDocumentMoniker": "OrderService.Domain\\Class1.cs",
+              "ToolTip": "C:\\Users\\henri\\OneDrive\\Desktop\\OrderService\\OrderService\\OrderService\\OrderService.Domain\\Class1.cs",
+              "RelativeToolTip": "OrderService.Domain\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-22T22:58:33.049Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\henri\\OneDrive\\Desktop\\OrderService\\OrderService\\OrderService\\OrderService.Application\\Class1.cs",
+              "RelativeDocumentMoniker": "OrderService.Application\\Class1.cs",
+              "ToolTip": "C:\\Users\\henri\\OneDrive\\Desktop\\OrderService\\OrderService\\OrderService\\OrderService.Application\\Class1.cs",
+              "RelativeToolTip": "OrderService.Application\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-22T22:57:21.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "OrderService.http",
+              "DocumentMoniker": "C:\\Users\\henri\\OneDrive\\Desktop\\OrderService\\OrderService\\OrderService\\OrderService\\OrderService.http",
+              "RelativeDocumentMoniker": "OrderService\\OrderService.http",
+              "ToolTip": "C:\\Users\\henri\\OneDrive\\Desktop\\OrderService\\OrderService\\OrderService\\OrderService\\OrderService.http",
+              "RelativeToolTip": "OrderService\\OrderService.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2026-06-22T22:55:54.376Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
