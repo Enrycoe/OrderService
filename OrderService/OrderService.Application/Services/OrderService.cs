@@ -12,42 +12,126 @@ public class OrderService(IUnitOfWork unitOfWork) : IOrderService
 {
     public async Task<Result> ConfirmAsync(Guid id, CancellationToken ct)
     {
-        try
-        {
-            var order = await unitOfWork.OrderRepository.GetByIdAsync(id);
-            if (order is null)
-                return Result.Failure(OrderErrors.NotFound);
+        var orderResult = await GetOrderAsync(id);
+        if (orderResult.IsFailure)
+            return Result.Failure(orderResult.Errors);
 
-            if (order.Status is OrderStatus.Confirmed)
-                return Result.Success();
+        var order = orderResult.Data!;
 
-            var confirmResult = order.Confirm();
-            if (confirmResult.IsFailure)
-                return confirmResult;
+        if (order.Status is OrderStatus.Confirmed)
+            return Result.Success();
 
-            await unitOfWork.BeginTransactionAsync(ct);
-            foreach (var item in order.Items)
+        var confirmResult = order.Confirm();
+        if (confirmResult.IsFailure)
+            return confirmResult;
+
+        return await ExecuteTransactionAsync(
+            async () =>
             {
-                var product = await unitOfWork.ProductRepository.GetByIdAsync(item.ProductId, ct);
+                var stockResult = await UpdateStockAsync(
+                    order,
+                    (product, quantity) => product.RemoveStock(quantity),
+                    ct);
 
-                if (product is null)
-                    return Result<Guid>.Failure(ProductErrors.NotFound(item.ProductId));
+                if (stockResult.IsFailure)
+                    return stockResult;
 
-                var removeStockResult = product.RemoveStock(item.Quantity);
-                if (removeStockResult.IsFailure)
+                await unitOfWork.OrderRepository.UpdateAsync(order, ct);
+
+                return Result.Success();
+            },
+            ct);
+    }
+
+    public async Task<Result> CancelAsync(Guid id, CancellationToken ct)
+    {
+        var orderResult = await GetOrderAsync(id);
+        if (orderResult.IsFailure)
+            return Result.Failure(orderResult.Errors);
+
+        var order = orderResult.Data!;
+
+        if (order.Status is OrderStatus.Canceled)
+            return Result.Success();
+
+        return await ExecuteTransactionAsync(
+            async () =>
+            {
+                if (order.Status is OrderStatus.Confirmed)
                 {
-                    await unitOfWork.RollbackAsync(ct);
-                    return removeStockResult;
+                    var stockResult = await UpdateStockAsync(
+                        order,
+                        (product, quantity) => product.AddStock(quantity),
+                        ct);
+
+                    if (stockResult.IsFailure)
+                        return stockResult;
                 }
 
-                await unitOfWork.ProductRepository.UpdateAsync(product, ct);
+                var cancelResult = order.Cancel();
+                if (cancelResult.IsFailure)
+                    return cancelResult;
+
+                await unitOfWork.OrderRepository.UpdateAsync(order, ct);
+
+                return Result.Success();
+            },
+            ct);
+    }
+
+    private async Task<Result<Order>> GetOrderAsync(Guid id)
+    {
+        var order = await unitOfWork.OrderRepository.GetByIdAsync(id);
+
+        return order is null
+            ? Result<Order>.Failure(OrderErrors.NotFound)
+            : Result.Success(order);
+    }
+
+    private async Task<Result> UpdateStockAsync(
+        Order order,
+        Func<Product, int, Result> stockOperation,
+        CancellationToken ct)
+    {
+        foreach (var item in order.Items)
+        {
+            var product = await unitOfWork.ProductRepository.GetByIdAsync(item.ProductId, ct);
+
+            if (product is null)
+                return Result.Failure(ProductErrors.NotFound(item.ProductId));
+
+            var stockResult = stockOperation(product, item.Quantity);
+
+            if (stockResult.IsFailure)
+                return stockResult;
+
+            await unitOfWork.ProductRepository.UpdateAsync(product, ct);
+        }
+
+        return Result.Success();
+    }
+
+    private async Task<Result> ExecuteTransactionAsync(
+        Func<Task<Result>> action,
+        CancellationToken ct)
+    {
+        try
+        {
+            await unitOfWork.BeginTransactionAsync(ct);
+
+            var result = await action();
+
+            if (result.IsFailure)
+            {
+                await unitOfWork.RollbackAsync(ct);
+                return result;
             }
-            await unitOfWork.OrderRepository.UpdateAsync(order, ct);
+
             await unitOfWork.CommitAsync(ct);
 
-            return Result.Success();
+            return result;
         }
-        catch (Exception)
+        catch
         {
             await unitOfWork.RollbackAsync(ct);
             throw;

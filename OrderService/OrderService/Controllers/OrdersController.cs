@@ -31,4 +31,11 @@ public class OrdersController(IOrderService orderService) : ControllerBase
         var result = await orderService.ConfirmAsync(id, ct);
         return result.Match(_ => NoContent());
     }
+
+    [HttpPost("{id}/cancel")]
+    public async Task<IActionResult> CancelAsync(Guid id, CancellationToken ct)
+    {
+        var result = await orderService.CancelAsync(id, ct);
+        return result.Match(_ => NoContent());
+    }
 }

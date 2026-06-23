@@ -67,4 +67,15 @@ public class Order
         Status = OrderStatus.Confirmed;
         return Result.Success();
     }
+
+    public Result Cancel()
+    {
+        if (Status == OrderStatus.Canceled) return Result.Success();
+
+        if (Status is not OrderStatus.Placed and not OrderStatus.Confirmed)
+            return Result.Failure(OrderErrors.InvalidStatusToCancel);
+
+        Status = OrderStatus.Canceled;
+        return Result.Success();
+    }
 }

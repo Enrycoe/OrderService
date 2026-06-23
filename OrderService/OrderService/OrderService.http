@@ -41,3 +41,8 @@ Authorization: Bearer {{token}}
 POST {{OrderService_HostAddress}}/orders/99d1108d-48eb-4586-9ef4-0949bce8d981/confirm
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+### Orders — Cancel Order
+POST {{OrderService_HostAddress}}/orders/99d1108d-48eb-4586-9ef4-0949bce8d981/cancel
+Content-Type: application/json
+Authorization: Bearer {{token}}
