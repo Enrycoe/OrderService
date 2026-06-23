@@ -20,9 +20,17 @@ public class OrdersController(IOrderService orderService) : ControllerBase
 
     [HttpGet("{id}")]
     [ActionName(nameof(GetByIdAsync))]
-    public async Task<IActionResult> GetByIdAsync(Guid id)
+    public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken ct)
     {
-        return Ok();
+        var result = await orderService.GetByIdAsync(id, ct);
+        return result.Match(Ok);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllAsync(int page, int pageSize, DateTime from, DateTime to, CancellationToken ct)
+    {
+        var result = await orderService.GetAllAsync(page, pageSize, from, to, ct);
+        return result.Match(Ok);
     }
 
     [HttpPost("{id}/confirm")]

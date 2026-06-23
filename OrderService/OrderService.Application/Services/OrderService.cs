@@ -12,7 +12,7 @@ public class OrderService(IUnitOfWork unitOfWork) : IOrderService
 {
     public async Task<Result> ConfirmAsync(Guid id, CancellationToken ct)
     {
-        var orderResult = await GetOrderAsync(id);
+        var orderResult = await GetOrderAsync(id, ct);
         if (orderResult.IsFailure)
             return Result.Failure(orderResult.Errors);
 
@@ -45,7 +45,7 @@ public class OrderService(IUnitOfWork unitOfWork) : IOrderService
 
     public async Task<Result> CancelAsync(Guid id, CancellationToken ct)
     {
-        var orderResult = await GetOrderAsync(id);
+        var orderResult = await GetOrderAsync(id, ct);
         if (orderResult.IsFailure)
             return Result.Failure(orderResult.Errors);
 
@@ -79,9 +79,9 @@ public class OrderService(IUnitOfWork unitOfWork) : IOrderService
             ct);
     }
 
-    private async Task<Result<Order>> GetOrderAsync(Guid id)
+    private async Task<Result<Order>> GetOrderAsync(Guid id, CancellationToken ct)
     {
-        var order = await unitOfWork.OrderRepository.GetByIdAsync(id);
+        var order = await unitOfWork.OrderRepository.GetByIdAsync(id, ct);
 
         return order is null
             ? Result<Order>.Failure(OrderErrors.NotFound)
@@ -164,5 +164,50 @@ public class OrderService(IUnitOfWork unitOfWork) : IOrderService
         await unitOfWork.OrderRepository.CreateAsync(order, ct);
 
         return Result.Success(order.Id);
+    }
+
+    public async Task<Result<PagedList<OrderListDto>>> GetAllAsync(int page, int pageSize, DateTime startDate, DateTime endDate, CancellationToken ct)
+    {
+        var pagedResult = await unitOfWork.OrderRepository.GetAllAsync(page, pageSize, startDate, endDate, ct);
+        var pagedResultDto = new PagedList<OrderListDto>
+        {
+            Data = [.. pagedResult.Data.Select(o => new OrderListDto
+            {
+                Id = o.Id,
+                Total = o.Total,
+                Status = o.Status.ToString(),
+                CreatedAt = o.CreatedAt
+            })],
+            Page = pagedResult.Page,
+            PageSize = pagedResult.PageSize,
+            TotalCount = pagedResult.TotalCount
+        };
+
+        return Result.Success(pagedResultDto);
+    }
+
+    public async Task<Result<OrderDto>> GetByIdAsync(Guid id, CancellationToken ct)
+    {
+        var order = await unitOfWork.OrderRepository.GetByIdAsync(id, ct);
+        if (order is null)
+            return Result<OrderDto>.Failure(OrderErrors.NotFound);
+
+        var orderDto = new OrderDto
+        {
+            Id = order.Id,
+            CustomerId = order.CustomerId,
+            Currency = order.Currency,
+            Total = order.Total,
+            Status = order.Status.ToString(),
+            CreatedAt = order.CreatedAt,
+            Items = [.. order.Items.Select(i => new OrderItemDto
+            {
+                ProductId = i.ProductId,
+                Quantity = i.Quantity,
+                UnitPrice = i.UnitPrice
+            })]
+        };
+
+        return Result.Success(orderDto);
     }
 }
