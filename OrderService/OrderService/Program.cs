@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using OrderService.Infrastructure;
 using OrderService.Infrastructure.Auth;
 using OrderService.Infrastructure.Context;
+using Scalar.AspNetCore;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,6 +56,7 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();

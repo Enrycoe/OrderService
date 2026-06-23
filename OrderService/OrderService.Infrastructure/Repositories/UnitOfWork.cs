@@ -9,7 +9,6 @@ public class UnitOfWork(AppDbContext context) : IUnitOfWork
     private IDbContextTransaction? _transaction;
 
     public IOrderRepository OrderRepository => field ??= new OrderRepository(context);
-    public IOrderItemRepository OrderItemsRepository => field ??= new OrderItemRepository(context);
     public IProductRepository ProductRepository => field ??= new ProductRepository(context);
     public IUserRepository UserRepository => field ??= new UserRepository(context);
 
