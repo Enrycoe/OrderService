@@ -2,9 +2,10 @@
 
 public interface IUnitOfWork
 {
-    IOrderRepository OrdersRepository { get; }
+    IOrderRepository OrderRepository { get; }
     IOrderItemRepository OrderItemsRepository { get; }
-    IProductRepository ProductsRepository { get; }
+    IProductRepository ProductRepository { get; }
+    IUserRepository UserRepository { get; }
     Task CommitAsync(CancellationToken cancellationToken = default);
 
     Task BeginTransactionAsync(CancellationToken cancellationToken = default);

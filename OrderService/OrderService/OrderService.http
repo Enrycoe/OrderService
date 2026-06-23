@@ -1,6 +1,19 @@
 @OrderService_HostAddress = http://localhost:5235
 
-GET {{OrderService_HostAddress}}/weatherforecast/
-Accept: application/json
+### Auth — Register
+POST {{OrderService_HostAddress}}/auth/register
+Content-Type: application/json
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+### Auth — Login
+POST {{OrderService_HostAddress}}/auth/token
+Content-Type: application/json
+{
+  "username": "admin",
+  "password": "admin"
+}
 
 ###

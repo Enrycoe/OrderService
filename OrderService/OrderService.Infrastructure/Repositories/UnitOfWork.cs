@@ -8,9 +8,10 @@ public class UnitOfWork(AppDbContext context) : IUnitOfWork
 {
     private IDbContextTransaction? _transaction;
 
-    public IOrderRepository OrdersRepository => field ??= new OrderRepository(context);
+    public IOrderRepository OrderRepository => field ??= new OrderRepository(context);
     public IOrderItemRepository OrderItemsRepository => field ??= new OrderItemRepository(context);
-    public IProductRepository ProductsRepository => field ??= new ProductRepository(context);
+    public IProductRepository ProductRepository => field ??= new ProductRepository(context);
+    public IUserRepository UserRepository => field ??= new UserRepository(context);
 
     public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
