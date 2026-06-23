@@ -5,4 +5,5 @@ namespace OrderService.Domain.Abstractions;
 public interface IProductRepository
 {
     public Task<Product?> GetByIdAsync(int id, CancellationToken ct);
+    public Task UpdateAsync(Product product, CancellationToken ct);
 }

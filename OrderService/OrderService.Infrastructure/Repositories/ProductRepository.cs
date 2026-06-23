@@ -9,4 +9,10 @@ public class ProductRepository(AppDbContext context) : IProductRepository
 {
     public async Task<Product?> GetByIdAsync(int id, CancellationToken ct)
         => await context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, ct);
+
+    public async Task UpdateAsync(Product product, CancellationToken ct)
+    {
+        context.Products.Update(product);
+        await context.SaveChangesAsync(ct);
+    }
 }

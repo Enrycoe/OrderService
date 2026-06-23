@@ -24,4 +24,11 @@ public class OrdersController(IOrderService orderService) : ControllerBase
     {
         return Ok();
     }
+
+    [HttpPost("{id}/confirm")]
+    public async Task<IActionResult> ConfirmAsync(Guid id, CancellationToken ct)
+    {
+        var result = await orderService.ConfirmAsync(id, ct);
+        return result.Match(_ => NoContent());
+    }
 }

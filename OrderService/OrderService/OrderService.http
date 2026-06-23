@@ -1,5 +1,5 @@
 @OrderService_HostAddress = https://localhost:7117
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbiIsImp0aSI6IjcyMGM0ZGQ2LTQ4YmEtNDZlNS05NDhkLThmNTgzNmMyZmRhZSIsImlhdCI6MTc4MjE4Nzc4NCwiZXhwIjoxNzgyMTkxMzg0LCJpc3MiOiJvcmRlcnNlcnZpY2UtYXBpIiwiYXVkIjoib3JkZXJzZXJ2aWNlLWNsaWVudHMifQ.puPCk4AQ0zS3ayyOpjecbr1w3pzYrmgGRBszERaNdzU
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbiIsImp0aSI6IjQ3MzYzOGQ4LTk4NWEtNGMyZi1hOTQwLWM4YjRmM2VhNGM3OCIsImlhdCI6MTc4MjE5MjM2OCwiZXhwIjoxNzgyMTk1OTY4LCJpc3MiOiJvcmRlcnNlcnZpY2UtYXBpIiwiYXVkIjoib3JkZXJzZXJ2aWNlLWNsaWVudHMifQ.refK3ipwIgveWrC1klHD02_tYCXmoWoLwod4Xb41Jlg
 
 ### Auth — Register
 POST {{OrderService_HostAddress}}/auth/register
@@ -31,8 +31,13 @@ Authorization: Bearer {{token}}
       "quantity": 2
     },
     {
-      "productId": 123,
-      "quantity": 1000
+      "productId": 4,
+      "quantity": 4
     }
   ]
 }
+
+### Orders — Confirm Order
+POST {{OrderService_HostAddress}}/orders/99d1108d-48eb-4586-9ef4-0949bce8d981/confirm
+Content-Type: application/json
+Authorization: Bearer {{token}}

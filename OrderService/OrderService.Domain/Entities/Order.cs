@@ -53,4 +53,18 @@ public class Order
     {
         Status = OrderStatus.Placed;
     }
+
+    public Result Confirm()
+    {
+        if (Status == OrderStatus.Confirmed) return Result.Success();
+
+        if (Status != OrderStatus.Placed)
+            return Result.Failure(OrderErrors.InvalidStatusToConfirm);
+
+        if (Items is { Count: 0 })
+            return Result.Failure(OrderErrors.MustContainItems);
+
+        Status = OrderStatus.Confirmed;
+        return Result.Success();
+    }
 }
