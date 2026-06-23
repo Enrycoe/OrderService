@@ -31,11 +31,13 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
 
         if (startDate.HasValue)
         {
+            startDate = DateTime.SpecifyKind(startDate.Value, DateTimeKind.Utc);
             query = query.Where(x => x.CreatedAt >= startDate.Value);
         }
 
         if (endDate.HasValue)
         {
+            endDate = DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc);
             query = query.Where(x => x.CreatedAt <= endDate.Value);
         }
 
