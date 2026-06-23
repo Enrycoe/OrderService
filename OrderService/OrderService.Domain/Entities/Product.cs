@@ -8,7 +8,7 @@ public class Product
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public decimal UnitPrice { get; set; }
-    public int AvailableStock { get; private set; }
+    public int AvailableStock { get; set; }
 
     public Result RemoveStock(int quantity)
     {
@@ -16,7 +16,7 @@ public class Product
             return Result.Failure(ProductErrors.StockOperationMustBeWithPositiveQuantity);
 
         if (AvailableStock < quantity)
-            return Result<Guid>.Failure(ProductErrors.InsufficientStock(Id));
+            return Result.Failure(ProductErrors.InsufficientStock(Id));
 
         AvailableStock -= quantity;
         return Result.Success();

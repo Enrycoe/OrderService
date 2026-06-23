@@ -1,6 +1,4 @@
-﻿using OrderService.Domain.Enums;
-
-namespace OrderService.Application.DTOs.Orders;
+﻿namespace OrderService.Application.DTOs.Orders;
 
 public class OrderListDto
 {

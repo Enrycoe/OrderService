@@ -36,29 +36,6 @@ builder.Services
                 Encoding.UTF8.GetBytes(jwtSettings.Key)),
             ClockSkew = TimeSpan.Zero         
         };
-        opt.Events = new JwtBearerEvents
-        {
-            OnAuthenticationFailed = ctx =>
-            {
-                Console.WriteLine($"❌ AUTH FAILED: {ctx.Exception.GetType().Name}: {ctx.Exception.Message}");
-                return Task.CompletedTask;
-            },
-            OnTokenValidated = ctx =>
-            {
-                Console.WriteLine($"✅ TOKEN VÁLIDO: {ctx.Principal?.Identity?.Name}");
-                return Task.CompletedTask;
-            },
-            OnChallenge = ctx =>
-            {
-                Console.WriteLine($"🔒 CHALLENGE: {ctx.Error} - {ctx.ErrorDescription}");
-                return Task.CompletedTask;
-            },
-            OnMessageReceived = ctx =>
-            {
-                Console.WriteLine($"📨 TOKEN RECEBIDO: '{ctx.Token}'");
-                return Task.CompletedTask;
-            }
-        };
     });
 
 builder.Services.AddAuthorization();

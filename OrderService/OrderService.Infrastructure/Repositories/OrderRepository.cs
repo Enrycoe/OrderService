@@ -39,6 +39,8 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
             query = query.Where(x => x.CreatedAt <= endDate.Value);
         }
 
+        query = query.OrderByDescending(x => x.CreatedAt).ThenBy(x => x.Id);  
+
         return await query.ToPagedListAsync(page, pageSize, ct);
     }
 }

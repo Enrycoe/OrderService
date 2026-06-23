@@ -5,6 +5,9 @@ namespace OrderService.Infrastructure.Extensions;
 
 public static class PagedListExtensions
 {
+    private const int DefaultPageSize = 10;
+    private const int MaxPageSize = 100;
+
     extension<T>(IQueryable<T> source)
     {
         public async Task<PagedList<T>> ToPagedListAsync(int? page, int? pageSize, CancellationToken ct)
@@ -13,10 +16,10 @@ public static class PagedListExtensions
                 page = 1;
 
             if (!pageSize.HasValue || pageSize <= 0)
-                pageSize = 10;
+                pageSize = DefaultPageSize;
 
-            if (pageSize > 100)
-                pageSize = 100;
+            if (pageSize > MaxPageSize)
+                pageSize = MaxPageSize;
 
             var totalCount = source.Count();
             var data = await source

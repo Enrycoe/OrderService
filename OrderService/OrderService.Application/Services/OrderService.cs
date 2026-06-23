@@ -140,7 +140,7 @@ public class OrderService(IUnitOfWork unitOfWork) : IOrderService
 
     public async Task<Result<Guid>> CreateAsync(CreateOrderDto orderDto, CancellationToken ct)
     {
-        if (orderDto.Items is { Count: 0 })
+        if (orderDto.Items is not { Count: > 0 })
             return Result<Guid>.Failure(OrderErrors.MustContainItems);
 
         var order = Order.Create(orderDto.CustomerId, orderDto.Currency);
