@@ -10,9 +10,10 @@ public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
     {
         builder.ToTable("order_items");
 
-        builder.HasKey(x => new { x.OrderId, x.ProductId });
+        builder.HasKey(x => x.Id);
 
         builder.Property(x => x.OrderId)
+            .HasColumnType("uuid")
             .IsRequired();
 
         builder.Property(x => x.ProductId)

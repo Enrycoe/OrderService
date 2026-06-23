@@ -12,6 +12,10 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.HasKey(x => x.Id);
 
+        builder.Property(p => p.Id)
+         .HasColumnType("integer")
+         .ValueGeneratedOnAdd();
+
         builder.Property(x => x.Id)
             .ValueGeneratedOnAdd();
 
