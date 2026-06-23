@@ -334,13 +334,15 @@ GET /orders
 |--------|--------|--------|--------|
 | page | int | Não | Página desejada |
 | pageSize | int | Não | Quantidade de registros por página |
+| customerId | int | Não | Identificador do cliente |
+| status | int | Não | Código de status |
 | from | datetime | Não | Data inicial do filtro |
 | to | datetime | Não | Data final do filtro |
 
 ### Exemplo
 
 ```http
-GET /orders?page=1&pageSize=10&from=2025-01-01&to=2025-12-31
+GET /orders?page=1&pageSize=10&customerId=1&status=1&from=2025-01-01&to=2025-12-31
 ```
 
 ### Resposta de Sucesso
