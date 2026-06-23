@@ -1,0 +1,42 @@
+services:
+  orderservice-api:
+    build:
+      context: ./OrderService
+      dockerfile: OrderService/Dockerfile
+    container_name: orderservice_api
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=orderservice-db;Database=OrderService;Username=postgres;Password=postgres
+    depends_on:
+      orderservice-db:
+        condition: service_healthy
+    networks:
+      - orderservice-network
+
+  orderservice-db:
+    image: postgres:15-alpine
+    container_name: orderservice_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=OrderService
+    ports:
+      - "5432:5432"
+    volumes:
+      - orderservice_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d OrderService"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - orderservice-network
+
+networks:
+  orderservice-network:
+    driver: bridge
+
+volumes:
+  orderservice_pgdata:

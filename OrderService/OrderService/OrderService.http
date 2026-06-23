@@ -1,58 +1,207 @@
-@OrderService_HostAddress = https://localhost:7117
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbiIsImp0aSI6IjIwYjJhNDNkLTQ3NzktNGNhNy05MDRkLTQyZDVlY2Y1Zjc5OCIsImlhdCI6MTc4MjE5NjMwNSwiZXhwIjoxNzgyMTk5OTA1LCJpc3MiOiJvcmRlcnNlcnZpY2UtYXBpIiwiYXVkIjoib3JkZXJzZXJ2aWNlLWNsaWVudHMifQ.7nelBFaI3ye3KppGdox9-l9C9rQIiwoy2rbW4EPiW7k
+### ============================================================================
+### OrderService - API Tests
+###
+### Fluxo recomendado:
+### 1. Register User
+### 2. Login
+### 3. Copiar token retornado para variável @token
+### 4. Create Order
+### 5. Copiar id retornado para variável @orderId
+### 6. Confirm Order
+### 7. Get Order
+### 8. Cancel Order
+### ============================================================================
 
-### Auth — Register
-POST {{OrderService_HostAddress}}/auth/register
+@host = https://localhost:7117
+
+### ============================================================================
+### AUTH VARIABLES
+### ============================================================================
+
+@username = admin
+@password = admin
+
+### Token JWT obtido no endpoint /auth/token
+@token =
+
+### ============================================================================
+### ORDER VARIABLES
+### ============================================================================
+
+### Atualize após criar um pedido
+@orderId = 00000000-0000-0000-0000-000000000000
+
+### Produtos seedados automaticamente pela aplicação
+@product1 = 1
+@product2 = 4
+
+### ============================================================================
+### AUTH - REGISTER
+### ============================================================================
+
+### Cria um novo usuário
+POST {{host}}/auth/register
 Content-Type: application/json
+
 {
-  "username": "admin",
-  "password": "admin"
+  "username": "{{username}}",
+  "password": "{{password}}"
 }
 
-### Auth — Login
-POST {{OrderService_HostAddress}}/auth/token
+### ============================================================================
+### AUTH - LOGIN
+### ============================================================================
+
+### Retorna um JWT
+POST {{host}}/auth/token
 Content-Type: application/json
+
 {
-  "username": "admin",
-  "password": "admin"
+  "username": "{{username}}",
+  "password": "{{password}}"
 }
 
-### Orders — Create Order
-POST {{OrderService_HostAddress}}/orders
-Content-Type: application/json
+### ============================================================================
+### ORDERS - CREATE
+### ============================================================================
+
+### Cria um pedido válido
+POST {{host}}/orders
 Authorization: Bearer {{token}}
+Content-Type: application/json
 
 {
   "customerId": 1,
   "currency": "BRL",
   "items": [
     {
-      "productId": 1,
+      "productId": {{product1}},
       "quantity": 2
     },
     {
-      "productId": 4,
+      "productId": {{product2}},
       "quantity": 4
     }
   ]
 }
 
-### Orders — Confirm Order
-POST {{OrderService_HostAddress}}/orders/99d1108d-48eb-4586-9ef4-0949bce8d981/confirm
+### ============================================================================
+### ORDERS - CREATE (EMPTY ITEMS)
+### Deve retornar 400
+### ============================================================================
+
+POST {{host}}/orders
+Authorization: Bearer {{token}}
 Content-Type: application/json
+
+{
+  "customerId": 1,
+  "currency": "BRL",
+  "items": []
+}
+
+### ============================================================================
+### ORDERS - CREATE (PRODUCT NOT FOUND)
+### Deve retornar 404
+### ============================================================================
+
+POST {{host}}/orders
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "currency": "BRL",
+  "items": [
+    {
+      "productId": 9999,
+      "quantity": 1
+    }
+  ]
+}
+
+### ============================================================================
+### ORDERS - CREATE (INSUFFICIENT STOCK)
+### Deve retornar 409
+### ============================================================================
+
+POST {{host}}/orders
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "currency": "BRL",
+  "items": [
+    {
+      "productId": {{product1}},
+      "quantity": 999999
+    }
+  ]
+}
+
+### ============================================================================
+### ORDERS - GET BY ID
+### ============================================================================
+
+GET {{host}}/orders/{{orderId}}
 Authorization: Bearer {{token}}
 
-### Orders — Cancel Order
-POST {{OrderService_HostAddress}}/orders/99d1108d-48eb-4586-9ef4-0949bce8d981/cancel
-Content-Type: application/json
+### ============================================================================
+### ORDERS - GET BY ID (NOT FOUND)
+### Deve retornar 404
+### ============================================================================
+
+GET {{host}}/orders/00000000-0000-0000-0000-000000000001
 Authorization: Bearer {{token}}
 
-### Orders — Get Order by Id
-GET {{OrderService_HostAddress}}/orders/99d1108d-48eb-4586-9ef4-0949bce8d981
-Content-Type: application/json
+### ============================================================================
+### ORDERS - GET ALL
+### ============================================================================
+
+GET {{host}}/orders
 Authorization: Bearer {{token}}
 
-### Orders — Get all
-GET {{OrderService_HostAddress}}/orders
-Content-Type: application/json
+### ============================================================================
+### ORDERS - GET ALL (PAGED)
+### ============================================================================
+
+GET {{host}}/orders?page=1&pageSize=10
+Authorization: Bearer {{token}}
+
+### ============================================================================
+### ORDERS - GET ALL (DATE FILTER)
+### ============================================================================
+
+GET {{host}}/orders?page=1&pageSize=10&from=2025-01-01&to=2025-12-31
+Authorization: Bearer {{token}}
+
+### ============================================================================
+### ORDERS - CONFIRM
+### ============================================================================
+
+POST {{host}}/orders/{{orderId}}/confirm
+Authorization: Bearer {{token}}
+
+### ============================================================================
+### ORDERS - CONFIRM (NOT FOUND)
+### Deve retornar 404
+### ============================================================================
+
+POST {{host}}/orders/00000000-0000-0000-0000-000000000001/confirm
+Authorization: Bearer {{token}}
+
+### ============================================================================
+### ORDERS - CANCEL
+### ============================================================================
+
+POST {{host}}/orders/{{orderId}}/cancel
+Authorization: Bearer {{token}}
+
+### ============================================================================
+### ORDERS - CANCEL (NOT FOUND)
+### Deve retornar 404
+### ============================================================================
+
+POST {{host}}/orders/00000000-0000-0000-0000-000000000001/cancel
 Authorization: Bearer {{token}}
