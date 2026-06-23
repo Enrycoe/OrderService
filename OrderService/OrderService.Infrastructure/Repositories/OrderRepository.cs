@@ -4,6 +4,7 @@ using OrderService.Domain.Entities;
 using OrderService.Domain.Models;
 using OrderService.Infrastructure.Context;
 using OrderService.Infrastructure.Extensions;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace OrderService.Infrastructure.Repositories;
 
@@ -24,10 +25,20 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
         await context.SaveChangesAsync(ct);
     }
 
-    public async Task<PagedList<Order>> GetAllAsync(int page, int pageSize, DateTime startDate, DateTime endDate, CancellationToken ct)
+    public async Task<PagedList<Order>> GetAllAsync(int? page, int? pageSize, DateTime? startDate, DateTime? endDate, CancellationToken ct)
     {
-        var query = context.Orders
-            .Where(x => x.CreatedAt >= startDate && x.CreatedAt <= endDate);
+        var query = context.Orders.AsQueryable();
+
+        if (startDate.HasValue)
+        {
+            query = query.Where(x => x.CreatedAt >= startDate.Value);
+        }
+
+        if (endDate.HasValue)
+        {
+            query = query.Where(x => x.CreatedAt <= endDate.Value);
+        }
+
         return await query.ToPagedListAsync(page, pageSize, ct);
     }
 }

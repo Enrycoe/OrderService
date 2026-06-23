@@ -1,5 +1,5 @@
 @OrderService_HostAddress = https://localhost:7117
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbiIsImp0aSI6IjQ3MzYzOGQ4LTk4NWEtNGMyZi1hOTQwLWM4YjRmM2VhNGM3OCIsImlhdCI6MTc4MjE5MjM2OCwiZXhwIjoxNzgyMTk1OTY4LCJpc3MiOiJvcmRlcnNlcnZpY2UtYXBpIiwiYXVkIjoib3JkZXJzZXJ2aWNlLWNsaWVudHMifQ.refK3ipwIgveWrC1klHD02_tYCXmoWoLwod4Xb41Jlg
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbiIsImp0aSI6IjIwYjJhNDNkLTQ3NzktNGNhNy05MDRkLTQyZDVlY2Y1Zjc5OCIsImlhdCI6MTc4MjE5NjMwNSwiZXhwIjoxNzgyMTk5OTA1LCJpc3MiOiJvcmRlcnNlcnZpY2UtYXBpIiwiYXVkIjoib3JkZXJzZXJ2aWNlLWNsaWVudHMifQ.7nelBFaI3ye3KppGdox9-l9C9rQIiwoy2rbW4EPiW7k
 
 ### Auth — Register
 POST {{OrderService_HostAddress}}/auth/register
@@ -44,5 +44,15 @@ Authorization: Bearer {{token}}
 
 ### Orders — Cancel Order
 POST {{OrderService_HostAddress}}/orders/99d1108d-48eb-4586-9ef4-0949bce8d981/cancel
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Orders — Get Order by Id
+GET {{OrderService_HostAddress}}/orders/99d1108d-48eb-4586-9ef4-0949bce8d981
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Orders — Get all
+GET {{OrderService_HostAddress}}/orders
 Content-Type: application/json
 Authorization: Bearer {{token}}

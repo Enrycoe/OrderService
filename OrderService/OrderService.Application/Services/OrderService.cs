@@ -166,7 +166,7 @@ public class OrderService(IUnitOfWork unitOfWork) : IOrderService
         return Result.Success(order.Id);
     }
 
-    public async Task<Result<PagedList<OrderListDto>>> GetAllAsync(int page, int pageSize, DateTime startDate, DateTime endDate, CancellationToken ct)
+    public async Task<Result<PagedList<OrderListDto>>> GetAllAsync(int? page, int? pageSize, DateTime? startDate, DateTime? endDate, CancellationToken ct)
     {
         var pagedResult = await unitOfWork.OrderRepository.GetAllAsync(page, pageSize, startDate, endDate, ct);
         var pagedResultDto = new PagedList<OrderListDto>

@@ -27,7 +27,7 @@ public class OrdersController(IOrderService orderService) : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllAsync(int page, int pageSize, DateTime from, DateTime to, CancellationToken ct)
+    public async Task<IActionResult> GetAllAsync(int? page, int? pageSize, DateTime? from, DateTime? to, CancellationToken ct)
     {
         var result = await orderService.GetAllAsync(page, pageSize, from, to, ct);
         return result.Match(Ok);
