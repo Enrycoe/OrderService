@@ -2,7 +2,7 @@ services:
   orderservice-api:
     build:
       context: ./OrderService
-      dockerfile: OrderService/Dockerfile
+      dockerfile: OrderService.Api/Dockerfile
     container_name: orderservice_api
     ports:
       - "8080:8080"

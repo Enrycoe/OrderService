@@ -3,7 +3,7 @@
     "Name": "New Profile",
     "Projects": [
       {
-        "Path": "OrderService\\OrderService.Api.csproj",
+        "Path": "OrderService.Api\\OrderService.Api.csproj",
         "Action": "Start"
       }
     ]

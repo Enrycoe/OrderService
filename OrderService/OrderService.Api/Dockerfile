@@ -12,13 +12,13 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["OrderService/OrderService.Api.csproj", "OrderService/"]
+COPY ["OrderService.Api/OrderService.Api.csproj", "OrderService.Api/"]
 COPY ["OrderService.Application/OrderService.Application.csproj", "OrderService.Application/"]
 COPY ["OrderService.Infrastructure/OrderService.Infrastructure.csproj", "OrderService.Infrastructure/"]
 COPY ["OrderService.Domain/OrderService.Domain.csproj", "OrderService.Domain/"]
-RUN dotnet restore "./OrderService/OrderService.Api.csproj"
+RUN dotnet restore "./OrderService.Api/OrderService.Api.csproj"
 COPY . .
-WORKDIR "/src/OrderService"
+WORKDIR "/src/OrderService.Api"
 RUN dotnet build "./OrderService.Api.csproj" -c $BUILD_CONFIGURATION -o /app.build
 
 # This stage is used to publish the service project to be copied to the final stage
