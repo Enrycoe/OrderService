@@ -72,13 +72,18 @@ public class OrdersController(IOrderService orderService) : ControllerBase
     public async Task<IActionResult> GetAllAsync(
         int? page,
         int? pageSize,
+        int? customerId,
+        int? status,
         DateTime? from,
         DateTime? to,
+
         CancellationToken ct)
     {
         var result = await orderService.GetAllAsync(
             page,
             pageSize,
+            customerId,
+            status,
             from,
             to,
             ct);

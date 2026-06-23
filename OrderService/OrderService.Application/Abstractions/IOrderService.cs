@@ -9,5 +9,5 @@ public interface IOrderService
     public Task<Result> ConfirmAsync(Guid id, CancellationToken ct);
     public Task<Result<OrderDto>> GetByIdAsync(Guid id, CancellationToken ct);
     Task<Result> CancelAsync(Guid id, CancellationToken ct);
-    Task<Result<PagedList<OrderListDto>>> GetAllAsync(int? page, int? pageSize, DateTime? startDate, DateTime? endDate, CancellationToken ct);
+    Task<Result<PagedList<OrderListDto>>> GetAllAsync(int? page, int? pageSize, int? customerId, int? status, DateTime? startDate, DateTime? endDate, CancellationToken ct);
 }

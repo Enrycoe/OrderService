@@ -170,6 +170,13 @@ GET {{host}}/orders?page=1&pageSize=10
 Authorization: Bearer {{token}}
 
 ### ============================================================================
+### ORDERS - GET ALL (CUSTOMER AND STATUS FILTER)
+### ============================================================================
+
+GET {{host}}/orders?page=1&pageSize=10&customerId=1&status=1
+Authorization: Bearer {{token}}
+
+### ============================================================================
 ### ORDERS - GET ALL (DATE FILTER)
 ### ============================================================================
 

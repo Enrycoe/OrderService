@@ -25,7 +25,7 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
         await context.SaveChangesAsync(ct);
     }
 
-    public async Task<PagedList<Order>> GetAllAsync(int? page, int? pageSize, DateTime? startDate, DateTime? endDate, CancellationToken ct)
+    public async Task<PagedList<Order>> GetAllAsync(int? page, int? pageSize, int? customerId, int? status, DateTime? startDate, DateTime? endDate, CancellationToken ct)
     {
         var query = context.Orders.AsQueryable();
 
@@ -41,7 +41,17 @@ public class OrderRepository(AppDbContext context) : IOrderRepository
             query = query.Where(x => x.CreatedAt <= endDate.Value);
         }
 
-        query = query.OrderByDescending(x => x.CreatedAt).ThenBy(x => x.Id);  
+        if (customerId.HasValue)
+        {
+            query = query.Where(x => x.CustomerId == customerId.Value);
+        }
+
+        if (status.HasValue)
+        {
+            query = query.Where(x => (int)x.Status == status.Value);
+        }
+
+        query = query.OrderByDescending(x => x.CreatedAt).ThenBy(x => x.CustomerId).ThenBy(x => x.Id);  
 
         return await query.ToPagedListAsync(page, pageSize, ct);
     }
