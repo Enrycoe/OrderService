@@ -10,10 +10,12 @@ namespace OrderService.Api.Controllers;
 public class OrdersController(IOrderService orderService) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> CreateAsync(CreateOrderDto createOrderDto, CancellationToken ct)
+    public async Task<IActionResult> CreateAsync(
+    [FromBody] CreateOrderDto createOrderDto,
+    CancellationToken ct)
     {
         var result = await orderService.CreateAsync(createOrderDto, ct);
-        return result.Match(id => CreatedAtAction(nameof(GetByIdAsync), id));
+        return result.Match(id => CreatedAtAction(nameof(GetByIdAsync), new { id }, new { id }));
     }
 
     [HttpGet("{id}")]

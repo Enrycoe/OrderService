@@ -21,7 +21,7 @@ public class Order
             CustomerId = customerId,
             Currency = currency,
             Status = OrderStatus.Draft,
-            CreatedAt = DateTime.Now,
+            CreatedAt = DateTime.UtcNow,
             Id = Guid.NewGuid()
         };
 

@@ -1,4 +1,5 @@
-@OrderService_HostAddress = http://localhost:5235
+@OrderService_HostAddress = https://localhost:7117
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbiIsImp0aSI6IjcyMGM0ZGQ2LTQ4YmEtNDZlNS05NDhkLThmNTgzNmMyZmRhZSIsImlhdCI6MTc4MjE4Nzc4NCwiZXhwIjoxNzgyMTkxMzg0LCJpc3MiOiJvcmRlcnNlcnZpY2UtYXBpIiwiYXVkIjoib3JkZXJzZXJ2aWNlLWNsaWVudHMifQ.puPCk4AQ0zS3ayyOpjecbr1w3pzYrmgGRBszERaNdzU
 
 ### Auth — Register
 POST {{OrderService_HostAddress}}/auth/register
@@ -16,4 +17,22 @@ Content-Type: application/json
   "password": "admin"
 }
 
-###
+### Orders — Create Order
+POST {{OrderService_HostAddress}}/orders
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "customerId": 1,
+  "currency": "BRL",
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 2
+    },
+    {
+      "productId": 123,
+      "quantity": 1000
+    }
+  ]
+}
